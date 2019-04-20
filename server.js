@@ -45,7 +45,7 @@ app.get("/", function(req, res) {
   });
   
 
-app.get("/api/reservations", function(req, res) {
+app.get("/api/tables", function(req, res) {
     return res.json(reservations);
 });
 
@@ -55,8 +55,10 @@ app.get("/api/waitlist", function(req, res) {
 
 if (reservations.length < 5) {
     
-    app.post("/api/reservations", function(req, res) {
+    app.post("/api/tables", function(req, res) {
         var newreservation = req.body;
+
+        newreservation.id = newreservation.id.replace(/\s+/g, "").toLowerCase();
         
         console.log(newreservation);
 
@@ -69,6 +71,8 @@ if (reservations.length < 5) {
 } else {
     app.post("/api/waitlist", function(req, res){
         var newwaitlist = req.body;
+
+        newwaitlist.id = newwaitlist.id.replace(/\s+/g, "").toLowerCase();
 
         console.log(newwaitlist);
 
