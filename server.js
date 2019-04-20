@@ -15,12 +15,22 @@ app.listen(PORT, function() {
 
 var reservations = [
     {
-        routeName: "table1",
+        id: "rob",
         name: "Rob",
+        email: "therobshock@yahoo.com",
+        phone: "661-703-6541"
+
 
     }
 ];
-var waitlist = [];
+var waitlist = [
+    {
+        id: "liz",
+        name: "Liz",
+        email: "lizardbolton@yahoo.com",
+        phone: "661-703-6542"
+    }
+];
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "home.html"));
@@ -35,10 +45,33 @@ app.get("/", function(req, res) {
   });
   
 
-/* app.get("/api/tables", function(req, res) {
-    return res.json(reservations, waitlist);
+app.get("/api/reservations", function(req, res) {
+    return res.json(reservations);
 });
 
-app.post("/api/tables", function(req, res) {
+app.get("/api/waitlist", function(req, res) {
+    return res.json(waitlist);
+});
 
-}) */
+if (reservations.length < 5) {
+    
+    app.post("/api/reservations", function(req, res) {
+        var newreservation = req.body;
+        
+        console.log(newreservation);
+
+        reservations.push(newreservation);
+
+        res.json(newreservation);
+        
+        
+    });
+} else {
+    app.post("/api/waitlist", function(req, res){
+        var newwaitlist = req.body;
+
+        console.log(newwaitlist);
+
+        waitlist.push(newwaitlist);
+    });
+}
